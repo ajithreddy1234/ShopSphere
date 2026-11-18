@@ -5,12 +5,12 @@ import { LuSun } from "react-icons/lu";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ colorMode, toggleColorMode, theme }) => (
-  <nav
+  <nav className="store-header"
     style={{
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
-      padding: "20px 36px",
+      padding: "18px clamp(16px, 4vw, 36px)",
       background: theme.navbarBg,
       color: theme.navbarText,
       boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
@@ -24,13 +24,13 @@ const Navbar = ({ colorMode, toggleColorMode, theme }) => (
       to="/"
       style={{
         fontWeight: "bold",
-        fontSize: 28,
+        fontSize: "clamp(18px, 4vw, 28px)",
         textDecoration: "none",
         color: theme.navbarText,
         letterSpacing: 1,
       }}
     >
-      Product Store 🛒
+      <img src="/shopsphere.svg" width="34" height="34" alt="" style={{display:"inline-block",verticalAlign:"middle",marginRight:10}} />ShopSphere
     </Link>
     <div style={{ display: "flex", gap: 16 }}>
       <Link to="/create">
@@ -50,7 +50,7 @@ const Navbar = ({ colorMode, toggleColorMode, theme }) => (
           + Create
         </button>
       </Link>
-      <button
+      <button aria-label="Toggle colour theme"
         onClick={toggleColorMode}
         style={{
           background: "none",

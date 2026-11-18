@@ -9,13 +9,14 @@ const ProductCard = ({ product, theme }) => {
   const { deleteProduct, updateProduct } = useProductStore();
 
   const handleDeleteProduct = async (pid) => {
+    if (!window.confirm("Delete this product from your workspace?")) return;
     const { success, message } = await deleteProduct(pid);
     alert(`${success ? "✅ Success" : "❌ Error"}: ${message}`);
   };
 
   const handleUpdateProduct = async (pid, updatedProduct) => {
     const { success, message } = await updateProduct(pid, updatedProduct);
-    setIsModalOpen(false);
+    if (success) setIsModalOpen(false);
     alert(`${success ? "✅ Success" : "❌ Error"}: ${message}`);
   };
 
@@ -43,7 +44,7 @@ const ProductCard = ({ product, theme }) => {
         </span>
         <div className="product-actions">
           <button
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => { setUpdatedProduct({...product}); setIsModalOpen(true); }}
             className="edit-btn"
             style={{
               background: theme.buttonBg,
@@ -81,7 +82,7 @@ const ProductCard = ({ product, theme }) => {
             </div>
             <div className="modal-body">
               <input
-                placeholder="Product Name"
+                aria-label="Product name" placeholder="Product Name"
                 name="name"
                 value={updatedProduct.name}
                 onChange={(e) =>
@@ -95,7 +96,7 @@ const ProductCard = ({ product, theme }) => {
                 }}
               />
               <input
-                placeholder="Price"
+                aria-label="Price" placeholder="Price"
                 name="price"
                 type="number"
                 value={updatedProduct.price}
@@ -110,7 +111,7 @@ const ProductCard = ({ product, theme }) => {
                 }}
               />
               <input
-                placeholder="Image URL"
+                aria-label="Image URL" placeholder="Image URL"
                 name="image"
                 value={updatedProduct.image}
                 onChange={(e) =>

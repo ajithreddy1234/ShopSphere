@@ -5,15 +5,17 @@
   "main": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development node ./backend/server.js",
-    "devstart": "nodemon ./backend/server.js",
+    "devstart": "node --watch ./backend/server.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
-    "start": "cross-env NODE_ENV=production node ./backend/server.js"
+    "start": "cross-env NODE_ENV=production node ./backend/server.js",
+    "test": "node --test"
   },
   "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@netlify/database": "^2.0.3",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "framer-motion": "^12.18.2",
@@ -21,7 +23,7 @@
     "mongoose": "^8.16.0"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3",
-    "nodemon": "^3.1.10"
+    "@netlify/database-dev": "^1.0.2",
+    "cross-env": "^7.0.3"
   }
 }

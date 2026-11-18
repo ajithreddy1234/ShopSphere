@@ -9,10 +9,13 @@ const CreatePage = ({ theme }) => {
     image: "",
   });
   const { createProduct } = useProductStore();
+  const [pending, setPending] = useState(false);
   const [toast, setToast] = useState(null);
 
   const handleAddProduct = async () => {
+    if(pending)return;setPending(true);
     const { success, message } = await createProduct(newProduct);
+    setPending(false);
     setToast({ message, status: success ? "success" : "error" });
     setTimeout(() => setToast(null), 2500);
     if (success) {
@@ -61,7 +64,7 @@ const CreatePage = ({ theme }) => {
         border: `1px solid ${theme.inputBorder}`,
       }}>
         <input
-          placeholder="Product Name"
+          aria-label="Product name" placeholder="Product Name"
           name="name"
           value={newProduct.name}
           onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
@@ -76,7 +79,7 @@ const CreatePage = ({ theme }) => {
           }}
         />
         <input
-          placeholder="Price"
+          aria-label="Price" placeholder="Price"
           name="price"
           type="number"
           value={newProduct.price}
@@ -92,7 +95,7 @@ const CreatePage = ({ theme }) => {
           }}
         />
         <input
-          placeholder="Image URL"
+          aria-label="Image URL" placeholder="Image URL"
           name="image"
           value={newProduct.image}
           onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
@@ -107,7 +110,7 @@ const CreatePage = ({ theme }) => {
           }}
         />
         <button
-          onClick={handleAddProduct}
+          disabled={pending} onClick={handleAddProduct}
           style={{
             background: theme.buttonBg,
             color: theme.buttonText,
@@ -122,7 +125,7 @@ const CreatePage = ({ theme }) => {
             transition: "background 0.2s",
           }}
         >
-          Add Product
+          {pending ? "Saving…" : "Add Product"}
         </button>
       </div>
     </div>

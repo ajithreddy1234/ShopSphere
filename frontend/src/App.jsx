@@ -27,6 +27,7 @@ function App() {
         toggleColorMode={toggleColorMode}
         theme={theme}
       />
+      <p style={{textAlign:"center",padding:"12px 20px",fontSize:13}}>Your own demo workspace · Changes are saved to the database for this browser.</p>
       <Routes>
         <Route
           path="/"

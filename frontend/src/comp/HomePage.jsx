@@ -4,7 +4,7 @@ import { useProductStore } from "../store/product";
 import ProductCard from "./ProductCard";
 
 const HomePage = ({ theme }) => {
-  const { fetchProducts, products } = useProductStore();
+  const { fetchProducts, products, loading, error } = useProductStore();
 
   useEffect(() => {
     fetchProducts();
@@ -19,14 +19,16 @@ const HomePage = ({ theme }) => {
         textAlign: "center",
         letterSpacing: 1,
       }}>
-        Current Products 🚀
+        Your product catalogue
       </h2>
+      {loading && <p role="status">Loading your catalogue…</p>}
+      {error && <p role="alert">{error} <button onClick={fetchProducts}>Retry</button></p>}
       <div className="product-grid">
         {products.map((product) => (
           <ProductCard key={product._id} product={product} theme={theme} />
         ))}
       </div>
-      {products.length === 0 && (
+      {!loading && !error && products.length === 0 && (
         <div style={{ textAlign: "center", color: theme.text, margin: "40px 0" }}>
           No products found 😢
         </div>
